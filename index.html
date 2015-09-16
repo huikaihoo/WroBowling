@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WRO Bowling Scoring</title>
+</head>
+<body>
+  <div class="ui sticky inverted stackable menu">
+    <div class="ui container">
+      <div class="header item">
+        WRO Bowling Scoring
+      </div>
+      <a class="item">Preliminary Rounds<div class="ui bottom right attached red label">*</div></a>
+      <a class="item">Final Round</a>
+      <a class="item">View All</a>
+      <a class="ui right dropdown item">
+        Practice <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item">Hong Kong</div>
+          <div class="item">World</div>
+          <div class="divider"></div>
+          <div class="item">Add Section</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="ui main text container" id="Pcontainer">
+    <div class="ui top attached menu">
+      <div class="header item">1st Preliminary Round</div>
+      <div class="right menu">
+        <a class="ui dropdown item" id="R1score">
+          <span>Total Score: 0</span>
+          <div class="menu">
+            <div class="item">Game #1: 0</div>
+            <div class="item">Game #2: 0</div>
+            <div class="item">Game #3: 0</div>
+            <div class="divider"></div>
+            <div class="item">Total Knocked: 0</div>
+            <div class="item">Total Strike: 0</div>
+          </div>
+        </a>
+        <a class="ui dropdown item" id="R1TM">
+          <span>Time used: 0:00</span>
+          <div class="menu">
+            <div class="item">#1: 0:00</div>
+            <div class="item">#2: 0:00</div>
+            <div class="item">#3: 0:00</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="ui bottom attached segment">
+      <table class="ui seven collapsing celled unstackable table" id="R1table">
+        <tbody>
+          <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td colspan="2">-</td>
+            <td colspan="2">-</td>
+            <td colspan="3">-</td>
+          </tr>
+      </tbody>
+      </table>
+      <div class="ui top attached tabular menu">
+        <a class="active item" data-tab="first">Game #1</a>
+        <a class="item" data-tab="second">Game #2</a>
+        <a class="item" data-tab="third">Game #3</a>
+      </div>
+      <div class="ui bottom attached active tab segment" data-tab="first">
+        <div class="ui right floated blue labled icon button" data-r="1" data-g="1" id="R1G1TM">
+          <i class="clock icon"></i> <span>0:00</span>
+        </div>
+        <div class="ui right floated green icon button" data-r="1" data-g="1" id="R1G1timer">
+          <i class="play icon"></i>
+        </div>
+        <div class="ui teal ribbon label" id="R1G1score">Score: 0</div>
+        <table class="ui very basic small compact stackable table">
+          <tbody>
+            <tr>
+              <td>Pick up Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="1" data-type="PB">
+                    <a class="active orange item">+0</a>
+                    <a class="orange item">+6</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>1st Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="1" data-type="B1" id="R1G1B1">
+                    <a class="active blue item">--</a>
+                    <a class="blue item">0</a>
+                    <a class="blue item">1</a>
+                    <a class="blue item">2</a>
+                    <a class="blue item">3</a>
+                    <a class="blue item">4</a>
+                    <a class="blue item">5</a>
+                    <a class="blue item">6</a>
+                    <a class="blue item">7</a>
+                    <a class="blue item">8</a>
+                    <a class="blue item">9</a>
+                    <a class="blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+             <td>2nd Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="1" data-type="B2" id="R1G1B2">
+                    <a class="active blue item">--</a>
+                    <a class="blue item">0</a>
+                    <a class="blue item">1</a>
+                    <a class="blue item">2</a>
+                    <a class="blue item">3</a>
+                    <a class="blue item">4</a>
+                    <a class="blue item">5</a>
+                    <a class="blue item">6</a>
+                    <a class="blue item">7</a>
+                    <a class="blue item">8</a>
+                    <a class="blue item">9</a>
+                    <a class="blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Green Pins</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="1" data-type="GP">
+                    <a class="active green item">+0</a>
+                    <a class="green item">+5</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Obstacle Pins</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="1" data-type="OP">
+                    <a class="active red item">+0</a>
+                    <a class="red item">-5</a>
+                    <a class="red item">-10</a>
+                    <a class="red item">-15</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Return to Base</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="1" data-type="RB">
+                    <a class="active orange item">+0</a>
+                    <a class="orange item">+3</a>
+                    <a class="orange item">+5</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="second">
+        <div class="ui right floated blue labled icon button" data-r="1" data-g="2" id="R1G2TM">
+          <i class="clock icon"></i> <span>0:00</span>
+        </div>
+        <div class="ui right floated green icon button" data-r="1" data-g="2" id="R1G2timer">
+          <i class="play icon"></i>
+        </div>
+        <div class="ui teal ribbon label" id="R1G2score">Score: 0</div>
+        <table class="ui very basic small compact stackable table">
+          <tbody>
+            <tr>
+              <td>Pick up Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="2" data-type="PB">
+                    <a class="active orange item">+0</a>
+                    <a class="orange item">+6</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>1st Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="2" data-type="B1" id="R1G2B1">
+                    <a class="active blue item">--</a>
+                    <a class="blue item">0</a>
+                    <a class="blue item">1</a>
+                    <a class="blue item">2</a>
+                    <a class="blue item">3</a>
+                    <a class="blue item">4</a>
+                    <a class="blue item">5</a>
+                    <a class="blue item">6</a>
+                    <a class="blue item">7</a>
+                    <a class="blue item">8</a>
+                    <a class="blue item">9</a>
+                    <a class="blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+             <td>2nd Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="2" data-type="B2" id="R1G2B2">
+                    <a class="active blue item">--</a>
+                    <a class="blue item">0</a>
+                    <a class="blue item">1</a>
+                    <a class="blue item">2</a>
+                    <a class="blue item">3</a>
+                    <a class="blue item">4</a>
+                    <a class="blue item">5</a>
+                    <a class="blue item">6</a>
+                    <a class="blue item">7</a>
+                    <a class="blue item">8</a>
+                    <a class="blue item">9</a>
+                    <a class="blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Green Pins</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="2" data-type="GP">
+                    <a class="active green item">+0</a>
+                    <a class="green item">+5</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Obstacle Pins</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="2" data-type="OP">
+                    <a class="active red item">+0</a>
+                    <a class="red item">-5</a>
+                    <a class="red item">-10</a>
+                    <a class="red item">-15</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Return to Base</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="2" data-type="RB">
+                    <a class="active orange item">+0</a>
+                    <a class="orange item">+3</a>
+                    <a class="orange item">+5</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="third">
+        <div class="ui right floated blue labled icon button" data-r="1" data-g="3" id="R1G3TM">
+          <i class="clock icon"></i> <span>0:00</span>
+        </div>
+        <div class="ui right floated green icon button" data-r="1" data-g="3" id="R1G3timer">
+          <i class="play icon"></i>
+        </div>
+        <div class="ui teal ribbon label" id="R1G3score">Score: 0</div>
+        <table class="ui very basic small compact stackable table">
+          <tbody>
+            <tr>
+              <td>Pick up Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="PB">
+                    <a class="active orange item">+0</a>
+                    <a class="orange item">+6</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>1st Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="B1" id="R1G3B1">
+                    <a class="active blue item">--</a>
+                    <a class="blue item">0</a>
+                    <a class="blue item">1</a>
+                    <a class="blue item">2</a>
+                    <a class="blue item">3</a>
+                    <a class="blue item">4</a>
+                    <a class="blue item">5</a>
+                    <a class="blue item">6</a>
+                    <a class="blue item">7</a>
+                    <a class="blue item">8</a>
+                    <a class="blue item">9</a>
+                    <a class="blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+             <td>2nd Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="B2" id="R1G3B2">
+                    <a class="active blue item">--</a>
+                    <a class="blue item">0</a>
+                    <a class="blue item">1</a>
+                    <a class="blue item">2</a>
+                    <a class="blue item">3</a>
+                    <a class="blue item">4</a>
+                    <a class="blue item">5</a>
+                    <a class="blue item">6</a>
+                    <a class="blue item">7</a>
+                    <a class="blue item">8</a>
+                    <a class="blue item">9</a>
+                    <a class="blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+             <td>3nd Ball</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="B3" id="R1G3B3">
+                    <a class="active blue item">--</a>
+                    <a class="disabled blue item">0</a>
+                    <a class="disabled blue item">1</a>
+                    <a class="disabled blue item">2</a>
+                    <a class="disabled blue item">3</a>
+                    <a class="disabled blue item">4</a>
+                    <a class="disabled blue item">5</a>
+                    <a class="disabled blue item">6</a>
+                    <a class="disabled blue item">7</a>
+                    <a class="disabled blue item">8</a>
+                    <a class="disabled blue item">9</a>
+                    <a class="disabled blue item">10</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Green Pins</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="GP">
+                    <a class="active green item">+0</a>
+                    <a class="green item">+5</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Obstacle Pins</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="OP">
+                    <a class="active red item">+0</a>
+                    <a class="red item">-5</a>
+                    <a class="red item">-10</a>
+                    <a class="red item">-15</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Return to Base</td>
+              <td>
+                <div class="column">
+                  <div class="ui inverted small pagination menu" data-r="1" data-g="3" data-type="RB">
+                    <a class="active orange item">+0</a>
+                    <a class="orange item">+3</a>
+                    <a class="orange item">+5</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="lib/jquery-2.1.4.min.js"></script>
+<script src="semantic/dist/semantic.min.js"></script>
+<script src="lib/jquery.storageapi.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/score.js"></script>
+<script>
+  $(document).ready(function(){
+    init();
+  });
+</script>
+</html>
