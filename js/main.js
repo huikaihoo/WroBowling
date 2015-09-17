@@ -30,14 +30,14 @@ function updateScore() {
 function updateUI() {
   //R1score
   for (var i=0; i<rec.R.length; i++) {
-    $('#R' + rec.R[i].Rid + 'score span').text('Total Score: ' + rec.R[0].Rscore.A );
+    $('#R' + rec.R[i].Rid + 'score span').text('Total Score: ' + rec.R[i].Rscore.A );
     $('#R' + rec.R[i].Rid + 'score .item').each( function(index) {
-      if (index < rec.R[0].G.length) {
-        $(this).text('Game #' + (index+1) + ': ' + getGameAScore(rec.R[0].G[index]));
-      } else if (index == rec.R[0].G.length) {
-        $(this).text('Total Knocked: ' + rec.R[0].Rscore.K );
-      } else if (index == rec.R[0].G.length + 1) {
-        $(this).text('Total Strike: ' + rec.R[0].Rscore.X );
+      if (index < rec.R[i].G.length) {
+        $(this).text('Game #' + (index+1) + ': ' + getGameAScore(rec.R[i].G[index]));
+      } else if (index == rec.R[i].G.length) {
+        $(this).text('Total Knocked: ' + rec.R[i].Rscore.K );
+      } else if (index == rec.R[i].G.length + 1) {
+        $(this).text('Total Strike: ' + rec.R[i].Rscore.X );
       }
     });
   }
