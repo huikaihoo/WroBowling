@@ -15,6 +15,9 @@ function updateScore() {
       calBO(rec.R[i].G[j], rec.R[i].G[j+1], rec.R[i].G[j+2]);
     }
   }
+  rec.Tscore.A = 0;
+  rec.Tscore.K = 0;
+  rec.Tscore.X = 0;
   for (var i=0; i<rec.R.length; i++) {
     rec.R[i].Rscore.A = 0;
     rec.R[i].Rscore.K = 0;
@@ -24,10 +27,39 @@ function updateScore() {
       rec.R[i].Rscore.K += getGameKScore(rec.R[i].G[j]);
       rec.R[i].Rscore.X += getGameXScore(rec.R[i].G[j]);
     }
+    rec.Tscore.A += rec.R[i].Rscore.A;
+    rec.Tscore.K += rec.R[i].Rscore.K;
+    rec.Tscore.X += rec.R[i].Rscore.X;
   }
 }
 
 function updateUI() {
+  //Pscore
+  $('#Pscore').text('Total Score: ' + rec.Tscore.A);
+  //PTM
+  //Psummary
+  {
+    var cnt = 0;
+    for (var i=0; i<rec.R.length; i++) {
+      for (var j=0; j<rec.R[i].G.length; j++) {
+        cnt++;
+        $('#Psummary td:eq(' + cnt++ + ')').text(getGameAScore(rec.R[i].G[j]));
+        $('#Psummary td:eq(' + cnt++ + ')').text(getGameKScore(rec.R[i].G[j]));
+        $('#Psummary td:eq(' + cnt++ + ')').text(getGameXScore(rec.R[i].G[j]));
+        $('#Psummary td:eq(' + cnt++ + ')').text('0:00');
+      }
+      cnt++;
+      $('#Psummary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.A);
+      $('#Psummary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.K);
+      $('#Psummary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.X);
+      $('#Psummary td:eq(' + cnt++ + ')').text('0:00');     
+    }
+    $('#Psummary tfoot th:eq(1)').text(rec.Tscore.A);
+    $('#Psummary tfoot th:eq(2)').text(rec.Tscore.K);
+    $('#Psummary tfoot th:eq(3)').text(rec.Tscore.X);
+    $('#Psummary tfoot th:eq(4)').text('0:00'); 
+  }
+
   //R1score
   for (var i=0; i<rec.R.length; i++) {
     $('#R' + rec.R[i].Rid + 'score span').text('Total Score: ' + rec.R[i].Rscore.A );
@@ -62,7 +94,7 @@ function updateUI() {
   //R1G1score
   for (var i=0; i<rec.R.length; i++) {
     for (var j=0; j<rec.R[i].G.length; j++) {
-      $('#R' + rec.R[i].Rid + 'G' + (j+1) + 'score').text('Score: ' + getGameAScore(rec.R[0].G[j]));
+      $('#R' + rec.R[i].Rid + 'G' + (j+1) + 'score').text('Score: ' + getGameAScore(rec.R[i].G[j]));
     }
   }
 }
@@ -156,7 +188,7 @@ function paginationMenuHandler() {
     }
 
     updateScore();
-    console.log(JSON.stringify(rec.R[i].G));
+    console.log(JSON.stringify(rec));
 
     updateUI();
   }
