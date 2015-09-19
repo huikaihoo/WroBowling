@@ -1,12 +1,32 @@
 'use strict';
-var ls = $.localStorage;
 var rec;
 
 function init() {
   rec = initSection('P');
-  $('.ui.dropdown').dropdown();
+  //$('.ui.dropdown').dropdown();
   $('.tabular.menu .item').tab();
   $('.pagination.menu a.item').on('click', paginationMenuHandler);
+  $('.SP.input button').on('click', inputSPHandler);
+  $('.SP.input input').on('keyup', inputSPHandler);
+  $('.SP.input input').on('change', inputSPHandler);
+  $('.menuAction.item').on('click', menuActionHandler);
+}
+
+function menuActionHandler()
+{
+  var target = $(this).data('target');
+  console.log(target);
+
+  // lock and unlock
+  if ($(this).find('.icon').hasClass('unlock')) {
+    $('#' + target).addClass('active');
+    $(this).find('.icon').removeClass('unlock').addClass('lock');
+  } else if ($(this).find('.icon').hasClass('lock')) {
+     $('#' + target).removeClass('active');
+    $(this).find('.icon').removeClass('lock').addClass('unlock'); 
+  }
+
+  // show and hide
 }
 
 function updateScore() {
@@ -19,7 +39,7 @@ function updateScore() {
   rec.Tscore.K = 0;
   rec.Tscore.X = 0;
   for (var i=0; i<rec.R.length; i++) {
-    rec.R[i].Rscore.A = 0;
+    rec.R[i].Rscore.A = rec.R[i].S;
     rec.R[i].Rscore.K = 0;
     rec.R[i].Rscore.X = 0;
     for (var j=0; j<rec.R[i].G.length; j++) {
@@ -79,11 +99,11 @@ function updateUI() {
     var cnt = 0;
     for (var j=0; j<rec.R[i].G.length; j++) {
       $('#R' + rec.R[i].Rid + 'table td:eq(' + (cnt++) + ')').text(getScoreStr(rec.R[i].G[j].B1));
-      $('#R' + rec.R[i].Rid + 'table td:eq(' + (cnt++) + ')').text(getScoreStr(rec.R[i].G[j].B2, getScore(rec.R[i].G[j].B1)));
+      $('#R' + rec.R[i].Rid + 'table td:eq(' + (cnt++) + ')').text(getScoreStr(rec.R[i].G[j].B2, getBscore(rec.R[i].G[j].B1)));
     }
     var prev = null;
-    if (getScore(rec.R[i].G[rec.R[i].G.length-1].B1) == 10) {
-      prev = getScore(rec.R[i].G[rec.R[i].G.length-1].B2);
+    if (getBscore(rec.R[i].G[rec.R[i].G.length-1].B1) == 10) {
+      prev = getBscore(rec.R[i].G[rec.R[i].G.length-1].B2);
     } 
     $('#R' + rec.R[i].Rid + 'table td:eq(' + (cnt++) + ')').text(getScoreStr(rec.R[i].G[rec.R[i].G.length-1].B3, prev));
     for (var j=0; j<rec.R[i].G.length; j++) {
@@ -94,7 +114,7 @@ function updateUI() {
   //R1G1score
   for (var i=0; i<rec.R.length; i++) {
     for (var j=0; j<rec.R[i].G.length; j++) {
-      $('#R' + rec.R[i].Rid + 'G' + (j+1) + 'score').text('Score: ' + getGameAScore(rec.R[i].G[j]));
+      $('#R' + rec.R[i].Rid + 'G' + (j+1) + 'score span').text('Score: ' + getGameAScore(rec.R[i].G[j]));
     }
   }
 }
@@ -107,7 +127,7 @@ function paginationMenuHandler() {
     var g = $(this).closest('.ui.menu').data('g');
     var type = $(this).closest('.ui.menu').data('type');
 
-    var i = (parseInt(r) == 'NaN') ? 0 : parseInt(r) - 1;
+    var i = isNaN(parseInt(r)) ? 0 : parseInt(r) - 1;
     var j = parseInt(g) - 1;
 
     if ($(this).text() == '--') {
@@ -192,4 +212,24 @@ function paginationMenuHandler() {
 
     updateUI();
   }
+}
+
+function inputSPHandler() {
+  var r = $(this).closest('.ui.input').data('r');
+  var g = $(this).closest('.ui.input').data('g');
+  var type = $(this).closest('.ui.input').data('type');
+
+  var i = isNaN(parseInt(r)) ? 0 : parseInt(r) - 1;
+  var j = parseInt(g) - 1;
+
+  if (type == 'SP') {
+    rec.R[i].G[j][type] = getScore($(this).closest('.ui.input').find('input').val()); 
+  }
+  else if (type == 'S') {
+    rec.R[i][type] = getScore($(this).closest('.ui.input').find('input').val()); 
+  }
+  updateScore();
+  console.log(JSON.stringify(rec));
+
+  updateUI();
 }
