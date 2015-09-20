@@ -8,6 +8,7 @@ WRO 2015 Regular University Category - Bowling Game Scoring Tools
 ## To Do List
 - Final Round
 - Timer
-- Auto-Save current data in local storage
+- Auto-Save current data
+- Cache for offline use
 - Save and view previous records
-- Save Team information in records
+- Save team information in records

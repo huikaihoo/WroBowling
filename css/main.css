@@ -5,3 +5,8 @@
 .readonly.dimmer {
   background-color: rgba(0, 0, 0, 0.1)!important;
 }
+
+.ui.fixed.inverted.menu .active.item {
+    background: #B5CC18 !important;
+    color: #000!important;
+}

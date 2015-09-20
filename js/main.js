@@ -27,6 +27,13 @@ function menuActionHandler()
   }
 
   // show and hide
+  if ($(this).find('.icon').hasClass('minus')) {
+    $('#' + target).transition('fade down')
+    $(this).find('.icon').removeClass('minus').addClass('add');
+  } else if ($(this).find('.icon').hasClass('add')) {
+     $('#' + target).transition('fade down')
+    $(this).find('.icon').removeClass('add').addClass('minus'); 
+  }
 }
 
 function updateScore() {
