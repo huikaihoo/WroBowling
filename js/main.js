@@ -2,20 +2,64 @@
 var rec;
 
 function init() {
-  rec = initSection('P');
-  //$('.ui.dropdown').dropdown();
+  $('.fixed.menu a.item').not('.dropdown').on('click', fixedMenuHandler);
   $('.tabular.menu .item').tab();
+  $('.menuAction.item').on('click', menuActionHandler);
   $('.pagination.menu a.item').on('click', paginationMenuHandler);
   $('.SP.input button').on('click', inputSPHandler);
-  $('.SP.input input').on('keyup', inputSPHandler);
-  $('.SP.input input').on('change', inputSPHandler);
-  $('.menuAction.item').on('click', menuActionHandler);
+  $('.SP.input input').on('keyup', inputSPHandler).on('change', inputSPHandler);
+
+  var session = $.localStorage.get('session');
+
+  if (session == null || session == 0) {
+    isViewSection = false;
+    $(window).unload(function() {
+      $.localStorage.set('session', 0);
+    });
+    $.localStorage.set('session', Date.now());
+    $('.fixed.menu a.item').not('.dropdown').each(function(){
+      if ($(this).data('target') == getAcitveSection()) {
+        $(this).addClass('active');
+      }
+  });
+  } else {
+    // init Archievd Record
+    isViewSection = true;
+    $('.fixed.menu a.item').not('.dropdown').each(function(){
+      if ($(this).data('target') == getAcitveSection()) {
+        $(this).addClass('active');
+      } else {
+        $(this).addClass('disabled');
+      }
+    });
+    $('#options').addClass('disabled');
+  }
+
+  initContainer();
 }
 
-function menuActionHandler()
-{
+function initContainer() {
+  var section = getAcitveSection();
+
+  rec = initSection(section);
+  $('#' + section + 'container').transition('fade');
+  console.log(section);
+}
+
+function fixedMenuHandler() {
   var target = $(this).data('target');
-  console.log(target);
+
+  if (target != null && !$(this).hasClass('disabled') && !$(this).hasClass('active')){
+    $('.main.text.transition.visible.container').transition('fade');
+    $(this).addClass('active').closest('.ui.menu').find('.item').not($(this)).removeClass('active');
+    setActiveSection(target);
+
+    initContainer();
+  }
+}
+
+function menuActionHandler() {
+  var target = $(this).data('target');
 
   // lock and unlock
   if ($(this).find('.icon').hasClass('unlock')) {
@@ -62,7 +106,7 @@ function updateScore() {
 
 function updateUI() {
   //Pscore
-  $('#Pscore').text('Total Score: ' + rec.Tscore.A);
+  $('#' + rec.Sid + 'score').text('Total Score: ' + rec.Tscore.A);
   //PTM
   //Psummary
   {
@@ -70,21 +114,21 @@ function updateUI() {
     for (var i=0; i<rec.R.length; i++) {
       for (var j=0; j<rec.R[i].G.length; j++) {
         cnt++;
-        $('#Psummary td:eq(' + cnt++ + ')').text(getGameAScore(rec.R[i].G[j]));
-        $('#Psummary td:eq(' + cnt++ + ')').text(getGameKScore(rec.R[i].G[j]));
-        $('#Psummary td:eq(' + cnt++ + ')').text(getGameXScore(rec.R[i].G[j]));
-        $('#Psummary td:eq(' + cnt++ + ')').text('0:00');
+        $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text(getGameAScore(rec.R[i].G[j]));
+        $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text(getGameKScore(rec.R[i].G[j]));
+        $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text(getGameXScore(rec.R[i].G[j]));
+        $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text('0:00');
       }
       cnt++;
-      $('#Psummary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.A);
-      $('#Psummary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.K);
-      $('#Psummary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.X);
-      $('#Psummary td:eq(' + cnt++ + ')').text('0:00');     
+      $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.A);
+      $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.K);
+      $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text(rec.R[i].Rscore.X);
+      $('#' + rec.Sid + 'summary td:eq(' + cnt++ + ')').text('0:00');     
     }
-    $('#Psummary tfoot th:eq(1)').text(rec.Tscore.A);
-    $('#Psummary tfoot th:eq(2)').text(rec.Tscore.K);
-    $('#Psummary tfoot th:eq(3)').text(rec.Tscore.X);
-    $('#Psummary tfoot th:eq(4)').text('0:00'); 
+    $('#' + rec.Sid + 'summary tfoot th:eq(1)').text(rec.Tscore.A);
+    $('#' + rec.Sid + 'summary tfoot th:eq(2)').text(rec.Tscore.K);
+    $('#' + rec.Sid + 'summary tfoot th:eq(3)').text(rec.Tscore.X);
+    $('#' + rec.Sid + 'summary tfoot th:eq(4)').text('0:00'); 
   }
 
   //R1score
