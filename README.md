@@ -18,13 +18,14 @@ WRO 2015 Regular University Category - Bowling Game Scoring Tools
 - 1st and 2nd Preliminary Round
 - Final Round
 - Summary
+- Auto-Save current data
 
 ## To Do List
 - Timer
-- Auto-Save current data
 - Cache for offline use
 - Archive and view previous records
 - Save team information in records
 
 ## Limitation
-- Only one instance (tab) can be used for scoring
+- Only one instance for Preliminary Rounds and Final Round can be used for scoring
+- (Possibly) **CANNOT EDIT** the Archived Records
