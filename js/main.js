@@ -1,5 +1,6 @@
 'use strict';
 var rec;
+var isUpdateAllUI;
 
 function init() {
   $('.fixed.menu a.item').not('.dropdown').on('click', fixedMenuHandler);
@@ -9,41 +10,43 @@ function init() {
   $('.SP.input button').on('click', inputSPHandler);
   $('.SP.input input').on('keyup', inputSPHandler).on('change', inputSPHandler);
 
-  var session = $.localStorage.get('session');
+  isUpdateAllUI = false;
+  var section = getActiveSection();
 
-  if (session == null || session == 0) {
-    isViewSection = false;
-    $(window).unload(function() {
-      $.localStorage.set('session', 0);
-    });
-    $.localStorage.set('session', Date.now());
-    $('.fixed.menu a.item').not('.dropdown').each(function(){
-      if ($(this).data('target') == getAcitveSection()) {
-        $(this).addClass('active');
-      }
+  $('.fixed.menu a.item').not('.dropdown').each(function(){
+    if ($(this).data('target') == section) {
+      $(this).addClass('active');
+    }
   });
-  } else {
-    // init Archievd Record
-    isViewSection = true;
-    $('.fixed.menu a.item').not('.dropdown').each(function(){
-      if ($(this).data('target') == getAcitveSection()) {
-        $(this).addClass('active');
-      } else {
-        $(this).addClass('disabled');
-      }
-    });
-    $('#options').addClass('disabled');
-  }
+  initContainer(section);
 
-  initContainer();
+  $(window).blur(windowBlurHandler);
+  $(window).focus(windowFocusHandler);
 }
 
-function initContainer() {
-  var section = getAcitveSection();
+function windowBlurHandler() {
+  // Save rec to local storage once tab lost focus
+  saveRec();
+}
 
-  rec = initSection(section);
-  $('#' + section + 'container').transition('fade');
-  console.log(section);
+function windowFocusHandler() {
+  // load rec from local storage once tab got focus
+  var target = $('.fixed.menu a.active.item').not('.dropdown').data('target');
+  loadRec(target);
+  setActiveSection(target);
+  UpdateAllUI();
+}
+
+function initContainer(sid) {
+  if (sid == 'Arch') {
+    rec = null;
+  } else {
+    loadRec(sid);
+  }
+
+  UpdateAllUI();
+  $('#' + sid + 'container').transition('fade');
+  console.log(sid);
 }
 
 function fixedMenuHandler() {
@@ -54,7 +57,7 @@ function fixedMenuHandler() {
     $(this).addClass('active').closest('.ui.menu').find('.item').not($(this)).removeClass('active');
     setActiveSection(target);
 
-    initContainer();
+    initContainer(target);
   }
 }
 
@@ -102,6 +105,7 @@ function updateScore() {
     rec.Tscore.K += rec.R[i].Rscore.K;
     rec.Tscore.X += rec.R[i].Rscore.X;
   }
+  saveRec();
 }
 
 function updateUI() {
@@ -181,10 +185,12 @@ function paginationMenuHandler() {
     var i = isNaN(parseInt(r)) ? 0 : parseInt(r) - 1;
     var j = parseInt(g) - 1;
 
-    if ($(this).text() == '--') {
-      rec.R[i].G[j][type] = -1;
-    } else {
-      rec.R[i].G[j][type] = parseInt($(this).text());
+    if (!isUpdateAllUI) {
+      if ($(this).text() == '--') {
+        rec.R[i].G[j][type] = -1;
+      } else {
+        rec.R[i].G[j][type] = parseInt($(this).text());
+      } 
     }
 
     // Handle Last Game
@@ -258,10 +264,12 @@ function paginationMenuHandler() {
       }
     }
 
-    updateScore();
-    console.log(JSON.stringify(rec));
+    if (!isUpdateAllUI) {
+      updateScore();
+      updateUI();     
+    }
 
-    updateUI();
+    //console.log(JSON.stringify(rec));    
   }
 }
 
@@ -280,7 +288,49 @@ function inputSPHandler() {
     rec.R[i][type] = getScore($(this).closest('.ui.input').find('input').val()); 
   }
   updateScore();
-  console.log(JSON.stringify(rec));
+  //console.log(JSON.stringify(rec));
 
+  updateUI();
+}
+
+function UpdateAllUI() {
+  isUpdateAllUI = true;
+  $('#' + rec.Sid + 'container .pagination.menu').each(function() {
+    var r = $(this).data('r');
+    var g = $(this).data('g');
+    var type = $(this).data('type');
+
+    var i = isNaN(parseInt(r)) ? 0 : parseInt(r) - 1;
+    var j = parseInt(g) - 1;
+    //console.log( r + ' ' + g + ' ' + type + ' ' + i + ' ' + j);
+
+    var score = rec.R[i].G[j][type];
+    if ((type == 'B1' || type == 'B2' || type == 'B3') && rec.R[i].G[j][type] == -1) {
+      score = NaN;
+    }
+
+    $(this).find('a.item').each(function() {
+      if (parseInt($(this).text()) == score || (isNaN($(this).text()) && isNaN(score))) {
+        $(this).click();
+      }
+    });
+  });
+
+  $('#' + rec.Sid + 'container .SP.input').each(function() {
+    var r = $(this).data('r');
+    var g = $(this).data('g');
+    var type = $(this).data('type');
+
+    var i = isNaN(parseInt(r)) ? 0 : parseInt(r) - 1;
+    var j = parseInt(g) - 1;
+    //console.log( r + ' ' + g + ' ' + type + ' ' + i + ' ' + j);
+
+    if (type == 'S'){
+      $(this).find('input').val(rec.R[i][type]);
+    } else {
+      $(this).find('input').val(rec.R[i].G[j][type]);
+    }
+  });
+  isUpdateAllUI = false;
   updateUI();
 }

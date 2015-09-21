@@ -1,5 +1,5 @@
 'use strict';
-var isViewSection;
+var lStorage = $.localStorage;
 
 $.urlParam = function(name) {
     url = window.location.href;
@@ -12,20 +12,37 @@ $.urlParam = function(name) {
     }
 }
 
-function getAcitveSection () {
-  if (isViewSection) {
-    return 'Arch';
+function getActiveSection() {
+  var val = lStorage.get('activeSection');
+  if (val) {
+    return val;
   } else {
-    var val = $.localStorage.get('activeSection');
-    if (val == null) {
-      setActiveSection('P');
-    }
-    return val == null ? 'P' : val;
+    setActiveSection('P');
+    return 'P';
   }
 }
 
-function setActiveSection (val) {
-  if (!isViewSection) {
-    $.localStorage.set('activeSection', val);
+function setActiveSection(val) {
+  lStorage.set('activeSection', val);
+}
+
+function loadRec(sid) {
+  console.log('loadRec');
+  if (sid != 'Arch') {
+    var val = lStorage.get('sharedRec-' + sid);
+    if (val) {
+      rec = val;
+    } else {
+      rec = initSection(sid);
+      saveRec();
+    }
+  }
+  console.log(JSON.stringify(rec)); 
+}
+
+function saveRec() {
+  console.log('saveRec');
+  if (rec) {
+    lStorage.set('sharedRec-' + rec.Sid, rec);
   }
 }

@@ -12,7 +12,7 @@ WRO 2015 Regular University Category - Bowling Game Scoring Tools
 ## Cautions
 - Basic testing on Chrome and Firefox only
 - Should be okay in Firefox and webkit-based browser (**NO** guarantee on IE)
-- Only Tablet and Desktop are support (need to view in Desktop mode for mobile)
+- Only Tablet and Desktop are supported (need "View in Desktop mode" for mobile)
 
 ## Finished
 - 1st and 2nd Preliminary Round
@@ -28,4 +28,3 @@ WRO 2015 Regular University Category - Bowling Game Scoring Tools
 
 ## Limitation
 - Only one instance (tab) can be used for scoring
-- (Possibly) CANNOT EDIT the Archived Records
