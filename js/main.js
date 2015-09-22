@@ -9,6 +9,10 @@ function init() {
   $('.pagination.menu a.item').on('click', paginationMenuHandler);
   $('.SP.input button').on('click', inputSPHandler);
   $('.SP.input input').on('keyup', inputSPHandler).on('change', inputSPHandler);
+  $('.ui.sticky').sticky({
+    offset       : 50,
+    context      : '#middle'
+  });
 
   isUpdateAllUI = false;
   var section = getActiveSection();
@@ -53,7 +57,7 @@ function fixedMenuHandler() {
   var target = $(this).data('target');
 
   if (target != null && !$(this).hasClass('disabled') && !$(this).hasClass('active')){
-    $('.main.text.transition.visible.container').transition('fade');
+    $('.text.basic.segment .transition.visible.container').transition('fade');
     $(this).addClass('active').closest('.ui.menu').find('.item').not($(this)).removeClass('active');
     setActiveSection(target);
 
@@ -109,6 +113,27 @@ function updateScore() {
 }
 
 function updateUI() {
+  //floatTotal
+  $('#left').find('.attached.segment h1').text(rec.Tscore.A);
+  //floatRow
+  {
+    var cnt = 0;
+    for (var i=0; i<rec.R.length; i++) {
+      for (var j=0; j<rec.R[i].G.length; j++) {
+        var str;
+        if (rec.Sid == 'P') {
+          str = " (R" + (i+1) + "G#" + (j+1) + ")";
+        } else {
+          str = " (RFG#" + (j+1) + ")";
+        }
+        $('#left span:eq(' + cnt++ + ')').text(getGameAScore(rec.R[i].G[j]) + str);
+      }   
+    }
+    if (rec.Sid =='F'){
+      $('#left span:eq(' + cnt++ + ')').text("-");
+    }
+  }
+
   //Pscore
   $('#' + rec.Sid + 'score').text('Total Score: ' + rec.Tscore.A);
   //PTM
@@ -294,6 +319,10 @@ function inputSPHandler() {
 }
 
 function UpdateAllUI() {
+  if (rec == null) {
+    return;
+  }
+
   isUpdateAllUI = true;
   $('#' + rec.Sid + 'container .pagination.menu').each(function() {
     var r = $(this).data('r');
