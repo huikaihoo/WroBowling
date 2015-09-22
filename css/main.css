@@ -4,9 +4,18 @@
 
 .readonly.dimmer {
   background-color: rgba(0, 0, 0, 0.1)!important;
+  z-index: 1!important;
 }
 
 .ui.fixed.inverted.menu .active.item {
-    background: #B5CC18 !important;
-    color: #000!important;
+  background: #B5CC18 !important;
+  color: #000!important;
+}
+
+.simple.dropdown.item .menu {
+  z-index: 2!important;
+}
+
+.very.close.rail {
+  z-index: 1!important;
 }

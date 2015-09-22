@@ -10,7 +10,7 @@ function init() {
   $('.SP.input button').on('click', inputSPHandler);
   $('.SP.input input').on('keyup', inputSPHandler).on('change', inputSPHandler);
   $('.ui.sticky').sticky({
-    offset       : 50,
+    offset       : 60,
     context      : '#middle'
   });
 

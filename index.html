@@ -33,7 +33,7 @@
           <i class="inverted ellipsis vertical icon"></i>
           <div class="ui secondary vertical menu">
             <div class="item" id="options" >
-              <i class="settings icon"></i> Options
+              <i class="options icon"></i> Options
             </div>
             <div class="item" id="github" onclick="window.open('https://github.com/huikaihoo/WroBowling');">
               <i class="github icon"></i> View Source
@@ -46,8 +46,8 @@
   <div class="ui main text basic segment container" id="middle">
     <div class="ui left very close rail">
       <div class="ui raised sticky segments" id="left">
-        <h4 class="ui top attached center aligned header">Total Score</h4>
-        <div class="ui attached center aligned segment"><h1></h1></div>
+        <h4 class="ui top attached right aligned header">Total Score</h4>
+        <div class="ui attached right aligned segment"><h1></h1></div>
         <div class="ui right aligned segment">
           <span></span></br>
           <span></span></br>
@@ -82,6 +82,14 @@
           </div>
         </div>
         <div class="ui bottom attached segment" align="center" id="Psummary">
+          <div align="right">
+            <div class="ui red labled icon button" data-s="P">
+              <i class="remove icon"></i> Discard
+            </div>
+            <div class="ui green labled icon button" data-s="P">
+              <i class="save icon"></i> Archive
+            </div>
+          </div>
           <table class="ui collapsing celled unstackable right aligned small compact table">
             <thead>
               <tr>
@@ -1040,6 +1048,14 @@
           </div>
         </div>
         <div class="ui bottom attached segment" align="center" id="Fsummary">
+          <div align="right">
+            <div class="ui red labled icon button" data-s="F">
+              <i class="remove icon"></i> Discard
+            </div>
+            <div class="ui green labled icon button" data-s="F">
+              <i class="save icon"></i> Archive
+            </div>
+          </div>
           <table class="ui collapsing celled unstackable right aligned small compact table">
             <thead>
               <tr>
